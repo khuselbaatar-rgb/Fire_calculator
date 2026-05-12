@@ -29,7 +29,7 @@ const I18N = {
     sliderLabel: "Время τ",
     legCool: "≤ 100 °C — холодно", legWarm: "100–300 °C", legHot: "300–500 °C",
     legVeryHot: "500–700 °C", legCritical: "≥ 700 °C — критично",
-    legBurnt: "δ — обугленный слой",
+    legBurnt: "δ",
     cardThermal: "1. Расчетные теплотехнические параметры",
     cardZero: "2. Статическая проверка при τ = 0 мин",
     cardTime: "3. Расчет несущей способности по времени",
