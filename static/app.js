@@ -131,9 +131,7 @@ function drawCrossSection(b, h, c1, c2, As1, As2, delta, ts1, ts2, tau) {
   for (const [x, y] of as1Pos) {
     svg += `<circle cx="${x}" cy="${y}" r="${r1}" fill="${col1}" stroke="#0b0f14" stroke-width="1.2"/>`;
   }
-  for (const [x, y] of as2Pos) {
-    svg += `<circle cx="${x}" cy="${y}" r="${r2}" fill="${col2}" stroke="#0b0f14" stroke-width="1.2"/>`;
-  }
+ 
 
  
   svg += `<text x="${ox + bs/2}" y="${oy + hs + 22}" text-anchor="middle" fill="#9aa7b5" font-size="13" font-family="Consolas,monospace">b = ${b} mm</text>`;
@@ -328,7 +326,6 @@ document.getElementById('year').textContent = new Date().getFullYear();
     As1:getNum('As1'),As2:getNum('As2'),
   };
   document.getElementById('sectionSvg').innerHTML = drawCrossSection(
-    inp.b||300, inp.h||300, inp.c1||50, inp.c2||150,
-    inp.As1||5027, inp.As2||2513, 0, 20, 20, 0,
-  );
-})();
+  inp.b||300, inp.h||300, inp.c1||50, inp.c2||150,
+  inp.As1||5027, 0, 0, 20, 20, 0,
+);
