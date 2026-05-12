@@ -86,18 +86,18 @@ function drawCrossSection(b, h, c1, c2, As1, As2, delta, ts1, ts2, tau) {
 
   const c1s = c1 * scale;
   const c2s = c2 * scale;
+  // Доор 3 арматур
   const as1Pos = [
-    [ox + c1s,       oy + c1s      ],
-    [ox + bs - c1s,  oy + c1s      ],
-    [ox + c1s,       oy + hs - c1s ],
-    [ox + bs - c1s,  oy + hs - c1s ],
+    [ox + bs/4,      oy + hs - c1s ],
+    [ox + bs/2,      oy + hs - c1s ],
+    [ox + 3*bs/4,    oy + hs - c1s ],
   ];
   
+  // Дээр 3 арматур
   const as2Pos = [
+    [ox + bs/4,      oy + c2s      ],
     [ox + bs/2,      oy + c2s      ],
-    [ox + bs/2,      oy + hs - c2s ],
-    [ox + c2s,       oy + hs/2     ],
-    [ox + bs - c2s,  oy + hs/2     ],
+    [ox + 3*bs/4,    oy + c2s      ],
   ];
 
   const col1 = tempColor(ts1);
