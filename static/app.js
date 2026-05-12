@@ -85,19 +85,16 @@ function drawCrossSection(b, h, c1, c2, As1, As2, delta, ts1, ts2, tau) {
   const c1s = c1 * scale;
   const c2s = c2 * scale;
   
-  // Булгийн өнцөгт 4 арматур (As1)
+  // Дөрвөн булгийн өнцөгт арматур (As1 = 4)
   const as1Pos = [
-    [ox + c1s,       oy + c1s      ],  // дээр зүүн
-    [ox + bs - c1s,  oy + c1s      ],  // дээр баруун
-    [ox + c1s,       oy + hs - c1s ],  // доор зүүн
-    [ox + bs - c1s,  oy + hs - c1s ],  // доор баруун
+    [ox + c1s,       oy + c1s      ],  // дээр зүүн булги
+    [ox + bs - c1s,  oy + c1s      ],  // дээр баруун булги
+    [ox + c1s,       oy + hs - c1s ],  // доор зүүн булги
+    [ox + bs - c1s,  oy + hs - c1s ],  // доор баруун булги
   ];
   
-  // Дээр доорын голуудаас тус бүр 1 арматур (As2 = 2)
-  const as2Pos = [
-    [ox + bs/2,      oy + c2s      ],  // дээр гол дунд
-    [ox + bs/2,      oy + hs - c2s ],  // доор гол дунд
-  ];
+  // As2 авахгүй - хоосон массив
+  const as2Pos = [];
 
   const col1 = tempColor(ts1);
   const col2 = tempColor(ts2);
