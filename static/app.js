@@ -1,5 +1,3 @@
-
-
 function fmt(x, n = 2) {
   return Number.isFinite(x) ? x.toFixed(n) : '—';
 }
