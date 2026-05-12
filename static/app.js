@@ -56,7 +56,6 @@ async function calc() {
   window._lastInputs  = inputs;
   window._currentTau  = 0;
 
-
   const slider = document.getElementById('tauSlider');
   slider.disabled = false;
   slider.min   = 0;
@@ -66,7 +65,6 @@ async function calc() {
 
   window._renderLastResult();
 }
-
 
 function drawCrossSection(b, h, c1, c2, As1, As2, delta, ts1, ts2, tau) {
   const W = 460;
@@ -78,7 +76,6 @@ function drawCrossSection(b, h, c1, c2, As1, As2, delta, ts1, ts2, tau) {
   const oy = (W - hs) / 2;
   const ds = Math.min(delta * scale, Math.min(bs, hs) / 2 - 1);
 
-  
   const r1 = Math.max(5, Math.min(28, Math.sqrt(Math.max(As1, 0) / 4 / Math.PI) * scale));
   const r2 = Math.max(4, Math.min(22, Math.sqrt(Math.max(As2, 0) / 4 / Math.PI) * scale));
 
@@ -101,7 +98,6 @@ function drawCrossSection(b, h, c1, c2, As1, As2, delta, ts1, ts2, tau) {
 
   let svg = `<svg viewBox="0 0 ${W} ${W}" xmlns="http://www.w3.org/2000/svg" aria-label="cross-section">`;
 
-  
   svg += `<defs>
     <pattern id="burnt" patternUnits="userSpaceOnUse" width="8" height="8" patternTransform="rotate(45)">
       <rect width="8" height="8" fill="#ff7a1a"/>
@@ -109,23 +105,19 @@ function drawCrossSection(b, h, c1, c2, As1, As2, delta, ts1, ts2, tau) {
     </pattern>
   </defs>`;
 
-  
   svg += `<rect x="${ox}" y="${oy}" width="${bs}" height="${hs}" fill="url(#burnt)" stroke="#999" stroke-width="1.2"/>`;
 
-  
   const innerW = bs - 2 * ds;
   const innerH = hs - 2 * ds;
   if (innerW > 0 && innerH > 0) {
     svg += `<rect x="${ox + ds}" y="${oy + ds}" width="${innerW}" height="${innerH}" fill="#3a3a3a" stroke="#555" stroke-width="1"/>`;
   }
 
-
   if (delta > 0.5) {
     svg += `<line x1="${ox}" y1="${oy - 8}" x2="${ox + ds}" y2="${oy - 8}" stroke="#ff7a1a" stroke-width="2"/>`;
     svg += `<text x="${ox + ds/2}" y="${oy - 12}" text-anchor="middle" fill="#ff9957" font-size="11" font-family="Consolas,monospace">δ=${fmt(delta,1)}</text>`;
   }
 
- 
   for (const [x, y] of as1Pos) {
     svg += `<circle cx="${x}" cy="${y}" r="${r1}" fill="${col1}" stroke="#0b0f14" stroke-width="1.2"/>`;
   }
@@ -133,11 +125,9 @@ function drawCrossSection(b, h, c1, c2, As1, As2, delta, ts1, ts2, tau) {
     svg += `<circle cx="${x}" cy="${y}" r="${r2}" fill="${col2}" stroke="#0b0f14" stroke-width="1.2"/>`;
   }
 
- 
   svg += `<text x="${ox + bs/2}" y="${oy + hs + 22}" text-anchor="middle" fill="#9aa7b5" font-size="13" font-family="Consolas,monospace">b = ${b} mm</text>`;
   svg += `<text x="${ox - 18}" y="${oy + hs/2}" text-anchor="middle" fill="#9aa7b5" font-size="13" font-family="Consolas,monospace" transform="rotate(-90 ${ox - 18} ${oy + hs/2})">h = ${h} mm</text>`;
 
-  
   svg += `<g font-family="Consolas,monospace">`;
   svg += `<text x="14" y="22" fill="#ff9957" font-size="14" font-weight="700">τ = ${tau} ${t('lblMin').trim()}</text>`;
   svg += `<text x="14" y="40" fill="#cbd6e2" font-size="11">A<tspan baseline-shift="sub" font-size="9">s1</tspan> · ts1 = ${fmt(ts1, 0)} °C</text>`;
@@ -148,7 +138,6 @@ function drawCrossSection(b, h, c1, c2, As1, As2, delta, ts1, ts2, tau) {
   return svg;
 }
 
-/* ---------- Find the chartRow nearest to a given tau ---------- */
 function chartRowAt(tau) {
   const r = window._lastResult;
   if (!r || !r.chartRows || !r.chartRows.length) return null;
@@ -156,7 +145,6 @@ function chartRowAt(tau) {
   return r.chartRows[idx];
 }
 
-/* ---------- Re-draw the section for the slider's current τ ---------- */
 function refreshSection() {
   const r = window._lastResult;
   const inp = window._lastInputs;
@@ -178,14 +166,12 @@ window._renderLastResult = function () {
   if (!r) return;
   const inputs = window._lastInputs || {};
 
-  // Thermal parameters
   document.getElementById('paramRows').innerHTML =
     `<tr><th>${t('rowLambdaT')}</th><td>${fmt(r.lambdaTem,4)} ${t('uWmC')}</td></tr>`+
     `<tr><th>${t('rowCT')}</th><td>${fmt(r.cTem,0)} ${t('uJkgC')}</td></tr>`+
     `<tr><th>${t('rowARed')}</th><td>${fmt(r.aRed,4)} ${t('uMm2s')}</td></tr>`+
     `<tr><th>${t('rowKb')}</th><td>${fmt(r.kbS,1)} ${t('uMm')}</td></tr>`;
 
-  // τ = 0 static check
   const phiNote = r.phiManual ? t('phiManualNote') : t('phiAutoNote');
   document.getElementById('zeroRows').innerHTML =
     `<tr><th>${t('rowL0')}</th><td>${fmt(r.l0,0)} ${t('uMm')}</td></tr>`+
@@ -194,7 +180,6 @@ window._renderLastResult = function () {
     `<tr><th>${t('rowN0')}</th><td>${fmt(r.N0,0)} ${t('uKn')}</td></tr>`+
     `<tr><th>${t('rowCheck')}</th><td class="${r.N0pass?'ok':'bad'}">${r.N0pass?t('okMsg'):t('badMsg')}</td></tr>`;
 
-  // Coarse table (user step)
   const rows = r.rows || [];
   document.getElementById('timeRows').innerHTML = rows.map(row =>
     `<tr><td>${row.tau}</td>`+
@@ -208,7 +193,6 @@ window._renderLastResult = function () {
     `<td class="${row.ok?'ok':'bad'}">${row.ok?t('okShort'):t('badShort')}</td></tr>`
   ).join('');
 
-  // Verdict
   let pfText = '', status = '';
   if (r.verdict === 'more') {
     pfText = t('pfMore').replace('{0}', r.tauLast);
@@ -232,7 +216,6 @@ window._renderLastResult = function () {
       .replace('{pf}', pfText)
       .replace('{extra}', r.verdict === 'more' ? t('conclPass') : t('conclFail'));
 
-  // Chart at 1-minute resolution (from chartRows)
   const cr     = r.chartRows || [];
   const labels = cr.map(x => x.tau);
   const capData  = cr.map(x => +x.Nu.toFixed(1));
@@ -284,7 +267,6 @@ window._renderLastResult = function () {
     },
   });
 
-  // Cross-section using current slider tau
   refreshSection();
 };
 
@@ -301,7 +283,6 @@ function loadExample() {
   calc();
 }
 
-/* ---------- Slider wiring ---------- */
 document.getElementById('tauSlider').addEventListener('input', (e) => {
   window._currentTau = +e.target.value;
   refreshSection();
@@ -317,7 +298,6 @@ document.getElementById('year').textContent = new Date().getFullYear();
   try { saved = localStorage.getItem('siteLang') || 'ru'; } catch(e){}
   setLang(saved);
 })();
-
 
 (function initSection(){
   const inp = {
